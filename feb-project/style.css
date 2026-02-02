@@ -1,0 +1,563 @@
+@import url('https://fonts.googleapis.com/css2?family=Zeyada&display=swap');
+
+body {
+  min-height: 100vh;
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("./images/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+/* ===================== PAPER ===================== */
+
+.paper {
+  background-image: var(--paper-bg);
+  background-position: center;
+  background-size: cover;
+
+  position: absolute;
+  padding: 20px 100px;
+
+  box-shadow: 1px 15px 20px rgba(0,0,0,0.4);
+  transform: rotateZ(-5deg) scale(0.95);
+  transition: transform 0.6s ease-out;
+
+  overflow: hidden;
+}
+
+.paper.zoomed {
+  transform: rotateZ(-5deg) scale(1.1);
+}
+
+/* Soft white layer */
+.paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.55);
+  z-index: 0;
+}
+
+/* Paper fiber texture */
+.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.paper > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===================== HEART PAPER ===================== */
+
+.paper.heart {
+  width: 200px;
+  height: 200px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.paper.heart::after {
+  content: "";
+  background-image: url("https://cdn.pixabay.com/photo/2016/03/31/19/25/cartoon-1294994__340.png");
+  background-size: 150px;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+}
+
+/* ===================== IMAGE PAPERS ===================== */
+
+.paper.image {
+  padding: 10px;
+}
+
+.paper.image p {
+  font-size: 30px;
+}
+
+/* ===================== TEXT ===================== */
+
+p {
+  font-family: 'Zeyada', cursive;
+  font-size: 50px;
+  color: rgb(0,0,100);
+  opacity: 0.75;
+  text-align: center;
+
+  filter: drop-shadow(2px 1.5px 1px rgba(0,0,105,0.9));
+  user-select: none;
+}
+
+/* ===================== IMAGES ===================== */
+
+img {
+  max-height: 200px;
+  max-width: 100%;
+  display: block;
+  margin: 10px auto;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+/* 🔓 Override global image limit for sneak peek */
+.sneak-frame img {
+  max-height: none;
+  max-width: none;
+}
+
+
+/* ===================== DOWNLOAD BUTTON ===================== */
+
+.download-btn {
+  display: block;
+  margin: 20px auto 0;
+
+  padding: 10px 24px;
+  font-family: 'Zeyada', cursive;
+  font-size: 26px;
+
+  color: rgb(120, 0, 80);
+  background: rgba(255, 255, 255, 0.6);
+
+  border: 2px dashed rgba(150, 0, 80, 0.35);
+  border-radius: 12px;
+
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.download-btn:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.download-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===================== NO BLUE SELECTION ===================== */
+
+.paper,
+.paper *,
+.download-btn {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.paper:focus,
+.paper *:focus,
+.download-btn:focus {
+  outline: none;
+}
+
+/* ===================== DOWNLOAD OVERLAY ===================== */
+
+.download-overlay {
+  position: fixed;
+  inset: 0;
+
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+}
+
+.download-overlay.hidden {
+  display: none;
+}
+
+.overlay-paper {
+  background-image: var(--paper-bg);
+  background-size: cover;
+
+  padding: 30px 60px;
+  box-shadow: 1px 15px 25px rgba(0,0,0,0.35);
+  transform: rotateZ(-3deg);
+  text-align: center;
+}
+
+.overlay-paper p {
+  font-size: 40px;
+}
+
+.download-overlay {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===================== FLOATING HEART ===================== */
+
+.floating-heart {
+  position: fixed;
+  font-size: 50px;
+  pointer-events: none;
+  opacity: 0.8;
+  animation: floatUp 3.8s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.9);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(-260px) translateX(var(--drift)) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* ===================== FORCE VISIBILITY FOR DOWNLOAD ===================== */
+
+.force-visible,
+.force-visible * {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  visibility: visible !important;
+}
+
+
+
+
+.progress-bar {
+  width: 260px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 14px auto;
+}
+
+#progressFill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 170, 200, 0.8),
+    rgba(255, 120, 180, 0.9)
+  );
+  transition: width 0.25s ease;
+}
+
+#progressPercent {
+  font-size: 26px;
+  opacity: 0.8;
+}
+
+
+
+.progress-bar {
+  position: relative;
+  width: 260px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  overflow: visible;
+  margin: 14px auto;
+
+  animation: softPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes softPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(255, 150, 180, 0);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255, 150, 180, 0.35);
+  }
+}
+
+#progressFill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 170, 200, 0.7),
+    rgba(255, 110, 170, 0.85)
+  );
+  border-radius: 8px;
+  transition: width 0.35s ease;
+}
+
+/* 💗 Moving Heart */
+#progressHeart {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -55%);
+  font-size: 35px;
+
+  transition: left 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+#progressNote {
+  font-family: 'Short Stack', sans-serif; /* clean & friendly */
+  font-size: 22px;
+
+  letter-spacing: 0.06em;   /* 🔥 subtle spacing between letters */
+  line-height: 1.4;
+
+  color: rgb(74, 4, 35);    /* your warm rose */
+  opacity: 0.8;
+
+  margin-top: 4px;
+  text-align: center;
+}
+
+
+/* ===================== SECRET CARD (REFINED) ===================== */
+
+.secret-card {
+  /* subtle reddish paper gradient */
+  background: linear-gradient(
+    135deg,
+    rgba(245, 220, 225, 0.95),
+    rgba(235, 200, 210, 0.9)
+  );
+
+  border-radius: 24px; /* 🔥 more rounded */
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.32);
+
+  transform: rotateZ(-2deg) scale(0.96);
+}
+
+/* soften the white overlay further */
+.secret-card::before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===================== SECRET CARD TEXT ===================== */
+
+.secret-note {
+  font-family: 'Short Stack', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+
+  color: rgb(95, 40, 55);
+  opacity: 0.75;
+
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+/* ===================== SECRET BUTTON ===================== */
+
+.secret-btn {
+  display: block;              /* 🔥 center button */
+  margin: 0 auto;              /* 🔥 horizontal centering */
+
+  padding: 10px 28px;          /* 🔥 smaller size */
+  font-size: 22px;
+
+  font-family: 'Short Stack', sans-serif;
+  letter-spacing: 0.04em;
+
+  background: rgb(140, 40, 70); /* muted wine */
+  color: #fff;
+
+  border: none;
+  border-radius: 22px;
+
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.secret-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+}
+
+.secret-btn:active {
+  transform: scale(0.96);
+}
+
+
+
+
+
+/* ================= SNEAK PEEK OVERLAY ================= */
+
+.sneak-overlay {
+  position: fixed;
+  inset: 0;
+  background: #f7f4f2;
+  z-index: 99999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.sneak-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ================= BACK BUTTON ================= */
+
+.sneak-back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+
+  padding: 8px 18px;
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 22px;
+
+  font-family: 'Short Stack', sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  opacity: 0.85;
+
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.sneak-back:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* ================= TOP TEXT ================= */
+
+.sneak-top-text {
+  position: fixed;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-family: 'Short Stack', 'Segoe Script', 'Bradley Hand', cursive;
+  font-size: 17px;
+  letter-spacing: 0.05em;
+
+  opacity: 0.7;
+}
+
+
+/* ================= FRAME ================= */
+
+.sneak-frame-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+
+
+
+
+
+
+
+
+/* ================= IMAGES ================= */
+
+.sneak-img {
+  max-width: min(42vw, 520px);  /* ⬅️ controls width */
+  max-height: 58vh;             /* ⬅️ leaves space for title + hint */
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+
+  display: none;
+}
+
+.sneak-img.active {
+  display: block;
+}
+
+
+
+
+.sneak-img.active {
+  opacity: 1;
+  transform: scale(0.8); /* ⬅️ subtle zoom-in */
+}
+
+
+
+
+/* ================= NAV BUTTONS ================= */
+
+.sneak-nav {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 50%;
+
+  font-size: 26px;
+  cursor: pointer;
+
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+
+  opacity: 0.7;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.sneak-nav:hover {
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+/* ================= BOTTOM HINT ================= */
+
+.sneak-hint {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-family: 'Zeyada', cursive;
+  font-size: 30px;
+  font-weight: 600;
+  color: rgba(90, 60, 70, 0.7);
+
+  text-align: center;
+}
